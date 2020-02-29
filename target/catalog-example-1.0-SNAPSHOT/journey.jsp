@@ -12,9 +12,9 @@
 </form>
 <h3>${journey.list}</h3>
 <ul>
-<c:forEach items="${journey.list}" var="path">
+<c:forEach items="${journey.list}" var="item">
     <li>
-        ${path}
+            ${item}
     </li>
 </c:forEach>
 </ul>

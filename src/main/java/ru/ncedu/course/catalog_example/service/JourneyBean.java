@@ -17,7 +17,7 @@ public class JourneyBean implements Serializable {
     }
 
     public void addUrl(String url, String params) {
-        String string = null;
+        String string;
         if (!url.contains("favicon.ico")) {
             string = "Opened " + url;
             if (params != null) {
@@ -25,7 +25,6 @@ public class JourneyBean implements Serializable {
             }
             this.list.add(string);
         }
-
     }
 
     public void clear() {this.list.clear();}

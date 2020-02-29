@@ -22,9 +22,11 @@
         <ul>
             <c:forEach items="${comments}" var="comment">
                 <li>
+
                     <h3>${comment.author.login}</h3>
                     ${comment.message}
                     <p>
+                        <a href="/like?id=${comment.id}&idOffering=${offering.id}">
                         <c:choose>
                             <c:when test="${comment.liked == true}">
                                 <input type="submit" value="Liked">
@@ -33,6 +35,7 @@
                                 <input type="submit" value="Like">
                             </c:otherwise>
                         </c:choose>
+                        </a>
                         ${comment.likes}
                     </p>
                 </li>

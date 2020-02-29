@@ -55,4 +55,10 @@ public class CommentService {
         return result;
     }
 
+    public void addLike (CommentEntity comment) {
+        comment.getLikes().add(authorizationBean.getUser().get());
+        commentDAO.update(comment);
+    }
+
+
 }
