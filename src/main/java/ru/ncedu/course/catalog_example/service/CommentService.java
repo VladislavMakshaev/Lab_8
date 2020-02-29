@@ -35,22 +35,20 @@ public class CommentService {
     }
 
     public List<CommentDTO> findAllByOffering(long offering) {
-        List<CommentEntity> comments = commentDAO.findByOfferingId(offering);
-        List<CommentDTO> result = commentDAO.findByOfferingId(offering).stream().map(CommentDTO::new).collect(Collectors.toList());
-        for (int i=0; i<result.size(); i++) {
-            if (authorizationBean.isAuthorized()) {
-                /*
-                if(comments.get(i).getLikes().contains(authorizationBean.getUser())) {
-                    result.get(i).setLiked(true);
-                }
-                 */
-
-                for (int j = 0; j < comments.get(i).getLikes().size(); j++) {
-                    if (comments.get(i).getLikes().get(j).getId() == authorizationBean.getUser().get().getId()) {
-                        result.get(i).setLiked(true);
+        List<CommentEntity> comments = commentDAO.findByOfferingId(offering).stream().distinct().collect(Collectors.toList());
+        List<CommentDTO> result = commentDAO.findByOfferingId(offering).stream().distinct().map(CommentDTO::new).collect(Collectors.toList());
+        if (authorizationBean.isAuthorized()) {
+            for (int i=0; i<result.size(); i++) {
+// if(comments.get(i).getLikes().contains(authorizationBean.getUser())) {
+// result.get(i).setLiked(true);
+// }
+                    for (int j = 0; j < comments.get(i).getLikes().size(); j++) {
+                        if (comments.get(i).getLikes().get(j).getId() == authorizationBean.getUser().get().getId()) {
+                            result.get(i).setLiked(true);
+                        }
                     }
-                }
             }
+
         }
         return result;
     }
@@ -59,6 +57,5 @@ public class CommentService {
         comment.getLikes().add(authorizationBean.getUser().get());
         commentDAO.update(comment);
     }
-
 
 }

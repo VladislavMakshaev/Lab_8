@@ -27,7 +27,7 @@ public class CommentEntity implements Serializable {
     @JoinColumn(name = "offering_id", nullable = false)
     private OfferingEntity offering;
 
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.LAZY)
     @JoinTable(
             name = "comment_likes",
             joinColumns = {@JoinColumn(name = "comment_id")},

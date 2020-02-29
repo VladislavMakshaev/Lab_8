@@ -11,6 +11,7 @@ import java.util.Map;
 public class CommentDAO extends AbstractDAO<CommentEntity, Long> {
 
     private static final String FIND_BY_OFFERING_ID = "FROM " + CommentEntity.class.getName() + " comment left join comment.likes cl WHERE comment.offering.id = :offeringId";
+
     public CommentDAO() {
         init(CommentEntity.class);
     }
