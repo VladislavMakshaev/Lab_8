@@ -26,7 +26,15 @@
                     <h3>${comment.author.login}</h3>
                     ${comment.message}
                     <p>
-                        <a href="/like?id=${comment.id}&idOffering=${offering.id}">
+                        <c:choose>
+                            <c:when test="${authorized == true}">
+                                <a style="text-decoration: none;" href="/like?id=${comment.id}&idOffering=${offering.id}">
+                            </c:when>
+                            <c:otherwise>
+                                <a style="text-decoration: none;" href="/login?fromOffering=${offering.id}">
+                            </c:otherwise>
+                        </c:choose>
+
                         <c:choose>
                             <c:when test="${comment.liked == true}">
                                 <input type="submit" value="Liked">

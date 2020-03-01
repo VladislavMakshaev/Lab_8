@@ -10,7 +10,6 @@ import java.util.List;
 @SessionScoped
 public class JourneyBean implements Serializable {
 
-    private String url;
     private List<String> list = new ArrayList<>();
 
     public JourneyBean() {
@@ -23,6 +22,7 @@ public class JourneyBean implements Serializable {
             if (params != null) {
                 string += "?" + params;
             }
+            //Object obj = string;
             this.list.add(string);
         }
     }
@@ -33,11 +33,7 @@ public class JourneyBean implements Serializable {
         return list;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public void setList(List<String> list) {
+        this.list = list;
     }
 }

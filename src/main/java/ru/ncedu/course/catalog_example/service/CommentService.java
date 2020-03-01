@@ -36,12 +36,14 @@ public class CommentService {
 
     public List<CommentDTO> findAllByOffering(long offering) {
         List<CommentEntity> comments = commentDAO.findByOfferingId(offering).stream().distinct().collect(Collectors.toList());
-        List<CommentDTO> result = commentDAO.findByOfferingId(offering).stream().distinct().map(CommentDTO::new).collect(Collectors.toList());
+        List<CommentDTO> result = comments.stream().map(CommentDTO::new).collect(Collectors.toList());
         if (authorizationBean.isAuthorized()) {
             for (int i=0; i<result.size(); i++) {
-// if(comments.get(i).getLikes().contains(authorizationBean.getUser())) {
-// result.get(i).setLiked(true);
-// }
+                /*
+                if(comments.get(i).getLikes().contains(authorizationBean.getUser())) {
+                    result.get(i).setLiked(true);
+                }
+                */
                     for (int j = 0; j < comments.get(i).getLikes().size(); j++) {
                         if (comments.get(i).getLikes().get(j).getId() == authorizationBean.getUser().get().getId()) {
                             result.get(i).setLiked(true);
@@ -53,9 +55,23 @@ public class CommentService {
         return result;
     }
 
-    public void addLike (CommentEntity comment) {
-        comment.getLikes().add(authorizationBean.getUser().get());
-        commentDAO.update(comment);
+    public void addLike (CommentEntity entity) {
+        boolean currentUserIsPresent = false;
+        if (entity.getLikes().size() != 0) {
+            for (int j = 0; j < entity.getLikes().size(); j++) {
+                if (entity.getLikes().get(j).getId() == authorizationBean.getUser().get().getId()) {
+                    entity.getLikes().remove(j);
+                    currentUserIsPresent = true;
+                    break;
+                }
+            }
+            if (!currentUserIsPresent) {
+                entity.getLikes().add(authorizationBean.getUser().get());
+            }
+        } else {
+            entity.getLikes().add(authorizationBean.getUser().get());
+        }
+        commentDAO.update(entity);
     }
 
 }

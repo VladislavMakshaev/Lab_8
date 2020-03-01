@@ -38,8 +38,6 @@ public class LikeServlet extends HttpServlet {
         } else {
             resp.sendRedirect(PathConstants.OFFERING_PATH + "?id=" + fromOffering);
         }
-        //getServletContext().getRequestDispatcher(OFFERING_JSP).forward(req, resp);
-
     }
 
     @Override

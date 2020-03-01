@@ -21,7 +21,7 @@ public class JourneyServlet extends HttpServlet {
     private JourneyBean journeyBean;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().setAttribute(JOURNEY_ATTR, journeyBean);
+        getServletContext().setAttribute(JOURNEY_ATTR, journeyBean.getList());
         getServletContext().getRequestDispatcher(JOURNEY_JSP).forward(req, resp);
     }
 
